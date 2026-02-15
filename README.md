@@ -46,6 +46,3 @@
 - **Backend**: Python, Flask, SQLAlchemy, SQLite
 - **Frontend**: HTML5, CSS3 (Glassmorphism), JavaScript (Fetch API)
 
-## 📄 Лицензия
-
-MIT
