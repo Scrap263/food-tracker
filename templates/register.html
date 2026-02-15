@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | Food Control</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .flash-msg {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="glass-card auth-card">
+            <h1>Регистрация</h1>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="flash-msg">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="/register">
+                <div class="form-group">
+                    <label>Придумай никнейм</label>
+                    <input type="text" name="username" required placeholder="superfit">
+                </div>
+                <div class="form-group">
+                    <label>Придумай пароль</label>
+                    <input type="password" name="password" required placeholder="••••••">
+                </div>
+                <button type="submit" class="btn">Создать аккаунт</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
+                Уже есть аккаунт? <a href="/login" style="color: var(--accent-color);">Войти</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

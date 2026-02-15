@@ -1,125 +1,136 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Control</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <header class="glass-card">
-        <h1>Food Control</h1>
-        <div class="date-picker">
-            <label for="date-input">Дата:</label>
-            <input type="date" id="date-input">
-        </div>
-    </header>
-
-    <!-- Stats Section -->
-    <section class="glass-card">
-        <h3>Итоги дня</h3>
-        <div class="stats-grid">
-            <div class="stat-item total-calories">
-                <span class="stat-value" id="total-kcal">0</span>
-                <span class="stat-label">ккал</span>
+    <div class="container">
+        <header class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h1 style="margin: 0; font-size: 1.5rem;">Food Control</h1>
+                <div style="font-size: 0.9rem;">
+                    <span style="color: var(--accent-color);">{{ user.username }}</span>
+                    <a href="/logout"
+                        style="color: var(--text-secondary); text-decoration: none; margin-left: 1rem;">Выйти</a>
+                </div>
             </div>
-            <div class="stat-item">
-                <span class="stat-value" id="total-prot">0</span>
-                <span class="stat-label">Белки</span>
+            <div class="date-picker">
+                <label for="date-input">Дата:</label>
+                <input type="date" id="date-input">
             </div>
-            <div class="stat-item">
-                <span class="stat-value" id="total-fat">0</span>
-                <span class="stat-label">Жиры</span>
+        </header>
+
+        <!-- Stats Section -->
+        <section class="glass-card">
+            <h3>Итоги дня</h3>
+            <div class="stats-grid">
+                <div class="stat-item total-calories">
+                    <span class="stat-value" id="total-kcal">0</span>
+                    <span class="stat-label">ккал</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-prot">0</span>
+                    <span class="stat-label">Белки</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-fat">0</span>
+                    <span class="stat-label">Жиры</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-carbs">0</span>
+                    <span class="stat-label">Угл.</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-fiber">0</span>
+                    <span class="stat-label">Волокна</span>
+                </div>
             </div>
-            <div class="stat-item">
-                <span class="stat-value" id="total-carbs">0</span>
-                <span class="stat-label">Угл.</span>
+        </section>
+
+        <!-- Meal Log Section -->
+        <section class="glass-card">
+            <h3>Приемы пищи</h3>
+            <br>
+            <div id="meal-list" class="meal-list">
+                <!-- Items injected by JS -->
+                <p style="text-align: center; color: var(--text-secondary);">Пока ничего не съедено</p>
             </div>
-            <div class="stat-item">
-                <span class="stat-value" id="total-fiber">0</span>
-                <span class="stat-label">Волокна</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Meal Log Section -->
-    <section class="glass-card">
-        <h3>Приемы пищи</h3>
-        <br>
-        <div id="meal-list" class="meal-list">
-            <!-- Items injected by JS -->
-            <p style="text-align: center; color: var(--text-secondary);">Пока ничего не съедено</p>
-        </div>
-    </section>
-</div>
-
-<!-- Floating Action Button -->
-<button class="fab" id="add-meal-btn" title="Добавить прием пищи">+</button>
-
-<!-- Modals -->
-
-<!-- Add Meal Modal -->
-<div class="modal" id="modal-add-meal">
-    <div class="modal-content glass-card">
-        <button class="close-btn" onclick="closeModal('modal-add-meal')">&times;</button>
-        <h2>Добавить прием</h2>
-        
-        <label>Найти блюдо</label>
-        <input type="text" id="search-input" placeholder="Например: Гречка...">
-        <div id="search-results" class="search-results"></div>
-
-        <div id="selected-dish-info" style="display:none; margin-bottom: 1rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem;">
-            Выбрано: <b id="selected-dish-name"></b><br>
-            <small id="selected-dish-macros"></small>
-        </div>
-
-        <label>Вес (грамм)</label>
-        <input type="number" id="weight-input" placeholder="100">
-
-        <button class="btn" id="confirm-add-meal">Добавить в дневник</button>
-        
-        <hr style="border: 0; border-top: 1px solid var(--card-border); margin: 1.5rem 0;">
-        <button class="btn btn-secondary" onclick="openCreateDishModal()">Создать новое блюдо</button>
+        </section>
     </div>
-</div>
 
-<!-- Create Dish Modal -->
-<div class="modal" id="modal-create-dish">
-    <div class="modal-content glass-card">
-        <button class="close-btn" onclick="closeModal('modal-create-dish')">&times;</button>
-        <h2>Новое блюдо</h2>
-        
-        <label>Название</label>
-        <input type="text" id="new-name" placeholder="Название блюда">
-        
-        <label>Ккал (на 100г)</label>
-        <input type="number" id="new-cal" step="0.1">
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-            <div>
-                <label>Белки</label>
-                <input type="number" id="new-prot" step="0.1">
+    <!-- Floating Action Button -->
+    <button class="fab" id="add-meal-btn" title="Добавить прием пищи">+</button>
+
+    <!-- Modals -->
+
+    <!-- Add Meal Modal -->
+    <div class="modal" id="modal-add-meal">
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeModal('modal-add-meal')">&times;</button>
+            <h2>Добавить прием</h2>
+
+            <label>Найти блюдо</label>
+            <input type="text" id="search-input" placeholder="Например: Гречка...">
+            <div id="search-results" class="search-results"></div>
+
+            <div id="selected-dish-info"
+                style="display:none; margin-bottom: 1rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem;">
+                Выбрано: <b id="selected-dish-name"></b><br>
+                <small id="selected-dish-macros"></small>
             </div>
-            <div>
-                <label>Жиры</label>
-                <input type="number" id="new-fat" step="0.1">
-            </div>
-            <div>
-                <label>Углеводы</label>
-                <input type="number" id="new-carbs" step="0.1">
-            </div>
-            <div>
-                <label>Волокна</label>
-                <input type="number" id="new-fiber" step="0.1">
-            </div>
+
+            <label>Вес (грамм)</label>
+            <input type="number" id="weight-input" placeholder="100">
+
+            <button class="btn" id="confirm-add-meal">Добавить в дневник</button>
+
+            <hr style="border: 0; border-top: 1px solid var(--card-border); margin: 1.5rem 0;">
+            <button class="btn btn-secondary" onclick="openCreateDishModal()">Создать новое блюдо</button>
         </div>
-
-        <button class="btn" id="save-dish-btn">Сохранить блюдо</button>
     </div>
-</div>
 
-<script src="/static/script.js"></script>
+    <!-- Create Dish Modal -->
+    <div class="modal" id="modal-create-dish">
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeModal('modal-create-dish')">&times;</button>
+            <h2>Новое блюдо</h2>
+
+            <label>Название</label>
+            <input type="text" id="new-name" placeholder="Название блюда">
+
+            <label>Ккал (на 100г)</label>
+            <input type="number" id="new-cal" step="0.1">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                    <label>Белки</label>
+                    <input type="number" id="new-prot" step="0.1">
+                </div>
+                <div>
+                    <label>Жиры</label>
+                    <input type="number" id="new-fat" step="0.1">
+                </div>
+                <div>
+                    <label>Углеводы</label>
+                    <input type="number" id="new-carbs" step="0.1">
+                </div>
+                <div>
+                    <label>Волокна</label>
+                    <input type="number" id="new-fiber" step="0.1">
+                </div>
+            </div>
+
+            <button class="btn" id="save-dish-btn">Сохранить блюдо</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
 </body>
+
 </html>
