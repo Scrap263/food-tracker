@@ -6,9 +6,11 @@
     --card-border: rgba(255, 255, 255, 0.1);
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --accent-color: #8b5cf6; /* Violet */
+    --accent-color: #8b5cf6;
+    /* Violet */
     --accent-hover: #7c3aed;
-    --success-color: #10b981; /* Emerald */
+    --success-color: #10b981;
+    /* Emerald */
     --error-color: #ef4444;
     --glass-blur: blur(12px);
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -24,10 +26,10 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
-    background-image: 
-        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    background-image:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -38,13 +40,16 @@ body {
 
 .container {
     width: 100%;
-    max-width: 600px; /* Mobile-first feel */
+    max-width: 600px;
+    /* Mobile-first feel */
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-weight: 700;
     letter-spacing: -0.025em;
 }
@@ -230,7 +235,10 @@ input[type="date"] {
 }
 
 /* Forms */
-input[type="text"], input[type="number"] {
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="date"] {
     width: 100%;
     padding: 0.75rem;
     margin-bottom: 1rem;
@@ -282,7 +290,8 @@ label {
     max-height: 200px;
     overflow-y: auto;
     margin-bottom: 1rem;
-    display: none; /* hidden by default */
+    display: none;
+    /* hidden by default */
 }
 
 .search-item {
